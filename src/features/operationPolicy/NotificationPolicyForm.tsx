@@ -176,7 +176,7 @@ export const NotificationPolicyForm = () => {
                     size="large"
                     loading={loading}
                     htmlType="submit"
-                    style={{ backgroundColor: '#1E293B', width: '200px', borderRadius: '8px' }}
+                    style={{ backgroundColor: '#879B7E', width: '200px', borderRadius: '8px' }}
                 >
                     저장하기
                 </Button>

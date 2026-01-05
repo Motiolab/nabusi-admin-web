@@ -29,7 +29,7 @@ export const Sidebar = ({ isMobileOpen, onCloseMobile }: SidebarProps) => {
         { href: '/', icon: <Home size={20} />, label: '홈' },
         { href: '/member', icon: <Users size={20} />, label: '회원 관리' },
         { href: '/teacher', icon: <GraduationCap size={20} />, label: '강사 관리' },
-        { href: '/wellness-class', icon: <Calendar size={20} />, label: '수업 관리' },
+        { href: '/wellness-lecture', icon: <Calendar size={20} />, label: '수업 관리' },
         { href: '/wellness-ticket', icon: <Ticket size={20} />, label: '수강권 관리' },
         { href: '/notice', icon: <Bell size={20} />, label: '공지사항' },
         { href: '/setting/policy', icon: <Settings size={20} />, label: '운영 정책' },

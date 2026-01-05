@@ -26,7 +26,7 @@ export const NoticeTableWidget = ({ dataSource, loading }: NoticeTableWidgetProp
             dataIndex: 'title',
             key: 'title',
             render: (text: string, record: IGetCenterNoticeListByCenterIdAdminResponseV1) => (
-                <Link to={`/notice/update/${record.id}`} style={{ color: '#1E293B', fontWeight: 600 }}>
+                <Link to={`/notice/update/${record.id}`} style={{ color: '#879B7E', fontWeight: 600 }}>
                     {text}
                 </Link>
             ),

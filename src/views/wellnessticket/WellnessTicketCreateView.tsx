@@ -28,10 +28,10 @@ const WellnessTicketCreateView = () => {
                     }}
                 />
                 <Flex vertical>
-                    <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                    <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>
                         수강권 추가
                     </Title>
-                    <Text style={{ color: '#64748B', fontSize: '14px' }}>
+                    <Text type="secondary" style={{ color: '#64748B', fontSize: '14px' }}>
                         센터에서 사용할 새로운 수강권을 등록합니다.
                     </Text>
                 </Flex>

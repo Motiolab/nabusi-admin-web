@@ -35,10 +35,10 @@ const AuthManagementView = () => {
     return (
         <Flex vertical gap={24} style={{ padding: '32px', minHeight: '100%', backgroundColor: '#F8FAFC' }}>
             <Flex vertical>
-                <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>
                     권한 관리
                 </Title>
-                <Text style={{ color: '#64748B', fontSize: '14px' }}>
+                <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>
                     센터 운영진의 접근 권한을 설정하고 역할을 관리합니다.
                 </Text>
             </Flex>

@@ -29,7 +29,7 @@ export const WellnessTicketInfoWidget = ({ data }: WellnessTicketInfoWidgetProps
                     <Tag color="blue">{ticketTypeMap[data.type] || data.type}</Tag>
                 </Descriptions.Item>
                 <Descriptions.Item label="판매가">
-                    <Text style={{ fontWeight: 700, color: '#1E293B' }}>{data.salesPrice.toLocaleString()} 원</Text>
+                    <Text style={{ fontWeight: 700, color: '#879B7E' }}>{data.salesPrice.toLocaleString()} 원</Text>
                     {data.discountValue > 0 && (
                         <Text delete style={{ marginLeft: '8px', color: '#94A3B8', fontSize: '12px' }}>
                             {data.price.toLocaleString()} 원 ({data.discountValue}%)

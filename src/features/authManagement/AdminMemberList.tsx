@@ -193,7 +193,7 @@ export const AdminMemberList = () => {
                         type="primary"
                         icon={<UserPlus size={18} />}
                         onClick={() => setIsInviteModalOpen(true)}
-                        style={{ backgroundColor: '#1E293B', borderRadius: '8px' }}
+                        style={{ backgroundColor: '#879B7E', borderRadius: '8px' }}
                     >
                         관리자 초대
                     </Button>
@@ -296,7 +296,7 @@ export const AdminMemberList = () => {
                         <Text type="secondary" style={{ fontSize: '13px' }}>• 입력하신 번호로 관리자 가입 링크가 발송됩니다.</Text>
                         <Text type="secondary" style={{ fontSize: '13px' }}>• 가입 완료 후 선택하신 권한으로 활동이 가능합니다.</Text>
                     </Flex>
-                    <Button type="primary" size="large" block htmlType="submit" style={{ backgroundColor: '#1E293B', height: 48, borderRadius: '8px' }}>
+                    <Button type="primary" size="large" block htmlType="submit" style={{ backgroundColor: '#879B7E', height: 48, borderRadius: '8px' }}>
                         초대 메시지 발송
                     </Button>
                 </Form>

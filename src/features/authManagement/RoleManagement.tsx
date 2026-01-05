@@ -147,13 +147,13 @@ export const RoleManagement = () => {
                                 padding: '16px 20px',
                                 cursor: 'pointer',
                                 backgroundColor: selectedRole?.id === role.id ? '#F8FAFC' : 'transparent',
-                                borderLeft: selectedRole?.id === role.id ? '4px solid #1E293B' : '4px solid transparent',
+                                borderLeft: selectedRole?.id === role.id ? '4px solid #879B7E' : '4px solid transparent',
                                 transition: 'all 0.2s'
                             }}
                         >
                             <Flex align="center" justify="space-between" style={{ width: '100%' }}>
                                 <Flex align="center" gap={12}>
-                                    <Shield size={18} color={selectedRole?.id === role.id ? '#1E293B' : '#94A3B8'} />
+                                    <Shield size={18} color={selectedRole?.id === role.id ? '#879B7E' : '#94A3B8'} />
                                     <Text strong={selectedRole?.id === role.id}>{role.name}</Text>
                                 </Flex>
                                 <ChevronRight size={16} color="#CBD5E1" />
@@ -256,7 +256,7 @@ export const RoleManagement = () => {
                 okText="생성하기"
                 cancelText="취소"
                 centered
-                okButtonProps={{ style: { backgroundColor: '#1E293B' } }}
+                okButtonProps={{ style: { backgroundColor: '#879B7E' } }}
             >
                 <div style={{ marginTop: 16 }}>
                     <Text type="secondary">역할의 이름을 입력해주세요 (예: 코치, 상담원)</Text>

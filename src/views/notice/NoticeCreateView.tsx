@@ -28,7 +28,7 @@ const NoticeCreateView = () => {
                     }}
                 />
                 <Flex vertical>
-                    <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                    <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#879B7E' }}>
                         공지사항 작성
                     </Title>
                     <Text style={{ color: '#64748B', fontSize: '14px' }}>

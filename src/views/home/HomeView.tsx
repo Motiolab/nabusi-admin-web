@@ -24,8 +24,8 @@ const HomeView = () => {
     return (
         <div style={{ padding: '24px' }}>
             <div style={{ marginBottom: 24 }}>
-                <Title level={2} style={{ margin: 0, fontSize: '24px' }}>나부시 대시보드</Title>
-                <Text type="secondary">센터의 실시간 예약 및 수업 정보를 확인하세요.</Text>
+                <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>나부시 대시보드</Title>
+                <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>센터의 실시간 예약 및 수업 정보를 확인하세요.</Text>
             </div>
 
             <Row gutter={[24, 24]}>
@@ -51,7 +51,7 @@ const HomeView = () => {
                                 border: '1px solid #E2E8F0'
                             }}>
                                 <Text strong style={{ display: 'block', color: '#64748B', fontSize: '13px', marginBottom: 4 }}>선택된 날짜</Text>
-                                <Text strong style={{ fontSize: '16px', color: '#1E293B' }}>
+                                <Text strong style={{ fontSize: '16px', color: '#879B7E' }}>
                                     {selectedDate.format('YYYY년 MM월 DD일')}
                                 </Text>
                             </div>

@@ -144,7 +144,7 @@ export const NoticeUpdateForm = ({ id }: NoticeUpdateFormProps) => {
                             size="large"
                             loading={loading}
                             htmlType="submit"
-                            style={{ backgroundColor: '#1E293B', borderColor: '#1E293B', width: '120px', borderRadius: '8px' }}
+                            style={{ backgroundColor: '#879B7E', borderColor: '#879B7E', width: '120px', borderRadius: '8px' }}
                         >
                             수정하기
                         </Button>
@@ -160,7 +160,7 @@ export const NoticeUpdateForm = ({ id }: NoticeUpdateFormProps) => {
                 <div style={{
                     width: '320px',
                     height: '560px',
-                    backgroundColor: '#1E293B',
+                    backgroundColor: '#879B7E',
                     borderRadius: '40px',
                     padding: '12px',
                     position: 'relative',
@@ -196,7 +196,7 @@ export const NoticeUpdateForm = ({ id }: NoticeUpdateFormProps) => {
                             </Flex>
 
                             <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
-                                <Text style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '8px', color: '#1E293B' }}>
+                                <Text style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '8px', color: '#879B7E' }}>
                                     {title || '제목을 입력해주세요'}
                                 </Text>
                                 <Text style={{ display: 'block', fontSize: '13px', lineHeight: 1.6, color: '#475569', whiteSpace: 'pre-wrap' }}>
@@ -207,12 +207,12 @@ export const NoticeUpdateForm = ({ id }: NoticeUpdateFormProps) => {
                             <Flex vertical gap={8} style={{ marginTop: '8px' }}>
                                 <div style={{
                                     padding: '12px',
-                                    border: '1px solid #1E293B',
+                                    border: '1px solid #879B7E',
                                     borderRadius: '8px',
                                     textAlign: 'center',
                                     fontSize: '14px',
                                     fontWeight: 600,
-                                    color: '#1E293B'
+                                    color: '#879B7E'
                                 }}>
                                     오늘 그만보기
                                 </div>

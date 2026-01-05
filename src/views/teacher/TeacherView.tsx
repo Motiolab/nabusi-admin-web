@@ -51,8 +51,8 @@ const TeacherView = () => {
                 {/* Header Section */}
                 <Flex justify="space-between" align="center">
                     <div>
-                        <Title level={2} style={{ margin: 0, fontSize: '24px' }}>선생님 관리</Title>
-                        <Text type="secondary">센터의 코치진을 관리하고 새로운 코치를 등록하세요.</Text>
+                        <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>선생님 관리</Title>
+                        <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>센터의 코치진을 관리하고 새로운 코치를 등록하세요.</Text>
                     </div>
                     <Button
                         type="primary"

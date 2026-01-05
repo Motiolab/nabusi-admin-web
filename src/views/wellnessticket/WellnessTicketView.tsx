@@ -55,10 +55,10 @@ const WellnessTicketView = () => {
     return (
         <Flex vertical gap={24} style={{ padding: '32px', minHeight: '100%' }}>
             <Flex vertical gap={4}>
-                <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>
                     수강권 관리
                 </Title>
-                <Text style={{ color: '#64748B', fontSize: '16px' }}>
+                <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>
                     센터의 수강권을 조회하고 관리할 수 있습니다.
                 </Text>
             </Flex>

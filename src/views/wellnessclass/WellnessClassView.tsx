@@ -33,7 +33,7 @@ const WellnessClassView = () => {
 
         setLoading(true);
         try {
-            const startDate = filters.date.startOf('day').format('YYYY-MM-DDTHH:mm:ssZ');
+            const startDate = filters.date.startOf('day').format('YYYY-MM-DD');
             const res = await getWellnessLectureListByStartDate(selectedCenterId, startDate);
             setClassList(res.data);
             applySearch(res.data, filters.searchText);
@@ -113,8 +113,8 @@ const WellnessClassView = () => {
         <div style={{ padding: '24px' }}>
             <Flex vertical gap={24}>
                 <div>
-                    <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#1E293B' }}>수업 관리</Title>
-                    <Text type="secondary" style={{ fontSize: '14px' }}>센터의 수업 일정과 예약을 효율적으로 관리하세요.</Text>
+                    <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>수업 관리</Title>
+                    <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>센터의 수업 일정과 예약을 효율적으로 관리하세요.</Text>
                 </div>
 
                 <Tabs

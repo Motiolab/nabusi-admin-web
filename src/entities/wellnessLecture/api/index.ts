@@ -1,5 +1,6 @@
 import api from '@/shared/api';
 import type { AxiosResponse } from 'axios';
+import { Dayjs } from 'dayjs';
 
 export interface IGetWellnessLectureAdminResponseV1 {
     id: number;
@@ -14,6 +15,7 @@ export interface IGetWellnessLectureAdminResponseV1 {
     startDateTime: string;
     endDateTime: string;
     isDelete: boolean;
+    lectureImageUrlList: string[];
 }
 
 export const getWellnessLectureListByStartDate = (centerId: number, startDate: string): Promise<AxiosResponse<Array<IGetWellnessLectureAdminResponseV1>>> => {
@@ -54,6 +56,12 @@ export const getWellnessLectureDetailById = (centerId: number, id: number): Prom
     return api.get(`/v1/admin/wellness-lecture/detail/${centerId}?id=${id}`);
 };
 
+export interface ITimeRangeWithDays {
+    startTime: string;
+    endTime: string;
+    dayOfWeek: string;
+}
+
 export interface ICreateWellnessLectureListWithWellnessClassAdminRequestV1 {
     wellnessClassId: number;
     name: string;
@@ -62,15 +70,39 @@ export interface ICreateWellnessLectureListWithWellnessClassAdminRequestV1 {
     maxReservationCnt: number;
     room: string;
     classImageUrlList: string[];
+    price: number;
+    teacherId: number;
+    wellnessLectureTypeId: number;
+    startDateTime: Dayjs;
+    endDateTime: Dayjs;
+    timeRangeWithDays: Array<ITimeRangeWithDays>;
+    wellnessTicketManagementIdList: Array<number>;
+}
+
+export const createWellnessLectureListWithWellnessClass = (createWellnessLectureListWithWellnessClassAdminRequest: ICreateWellnessLectureListWithWellnessClassAdminRequestV1): Promise<AxiosResponse<boolean>> => {
+    return api.post(`/v1/admin/wellness-lecture/list/${createWellnessLectureListWithWellnessClassAdminRequest.centerId}`, createWellnessLectureListWithWellnessClassAdminRequest);
+};
+
+export const deleteWellnessLecture = (centerId: number, id: number, isSendNoti: boolean): Promise<AxiosResponse<boolean>> => {
+    return api.delete(`/v1/admin/wellness-lecture/${centerId}?id=${id}&isSendNoti=${isSendNoti}`);
+};
+
+export interface IUpdateWellnessLectureAdminRequestV1 {
+    id: number;
+    name: string;
+    description: string;
+    centerId: number;
+    maxReservationCnt: number;
+    room: string;
+    lectureImageUrlList: string[];
     teacherId: number;
     wellnessLectureTypeId: number;
     startDateTime: string;
     endDateTime: string;
-    timeRangeWithDays: any[];
     wellnessTicketManagementIdList: number[];
     price: number | undefined;
 }
 
-export const createWellnessLectureListWithWellnessClass = (request: ICreateWellnessLectureListWithWellnessClassAdminRequestV1): Promise<AxiosResponse<boolean>> => {
-    return api.post(`/v1/admin/wellness-lecture/list/with-wellness-class`, request);
+export const updateWellnessLecture = (request: IUpdateWellnessLectureAdminRequestV1): Promise<AxiosResponse<boolean>> => {
+    return api.put(`/v1/admin/wellness-lecture/${request.centerId}`, request);
 };

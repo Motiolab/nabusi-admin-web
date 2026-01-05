@@ -31,10 +31,10 @@ const WellnessTicketUpdateView = () => {
                     }}
                 />
                 <Flex vertical>
-                    <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                    <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>
                         수강권 수정
                     </Title>
-                    <Text style={{ color: '#64748B', fontSize: '14px' }}>
+                    <Text type="secondary" style={{ color: '#64748B', fontSize: '14px' }}>
                         기존 수강권의 정보를 수정합니다.
                     </Text>
                 </Flex>

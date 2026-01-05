@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Form, Input, Radio, Button, Flex, Typography, message, Divider, DatePicker, Switch, ColorPicker } from 'antd';
+import { Form, Input, Radio, Button, Flex, Typography, message, DatePicker, Switch, ColorPicker, Row, Col, Card } from 'antd';
 import type { RootState } from '@/app/store';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -91,134 +91,148 @@ export const WellnessTicketIssuanceUpdateForm = ({ id }: WellnessTicketIssuanceU
             form={form}
             layout="vertical"
             onFinish={onFinish}
-            style={{ maxWidth: '800px', margin: '0 auto' }}
         >
-            <Flex vertical gap={32} style={{ backgroundColor: '#FFFFFF', padding: '40px', borderRadius: '16px', border: '1px solid #F1F5F9' }}>
-                <section>
-                    <Title level={4} style={{ marginBottom: '24px' }}>회원 정보</Title>
-                    <Flex gap={24}>
-                        <Flex vertical gap={4} style={{ flex: 1 }}>
-                            <Text style={{ color: '#64748B', fontSize: '12px' }}>이름</Text>
-                            <Text style={{ fontSize: '16px', fontWeight: 600 }}>{initialData?.memberName}</Text>
-                        </Flex>
-                        <Flex vertical gap={4} style={{ flex: 1 }}>
-                            <Text style={{ color: '#64748B', fontSize: '12px' }}>휴대폰번호</Text>
-                            <Text style={{ fontSize: '16px', fontWeight: 600 }}>{initialData?.mobile}</Text>
-                        </Flex>
-                    </Flex>
-                </section>
+            <Row gutter={[16, 16]}>
+                {/* Left Column: Member & Core Settings */}
+                <Col span={14}>
+                    <Flex vertical gap={12}>
+                        <Card size="small" title={<Title level={5} style={{ margin: 0 }}>회원 정보</Title>} style={{ borderRadius: '12px' }}>
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Flex vertical gap={4}>
+                                        <Text style={{ color: '#64748B', fontSize: '12px' }}>이름</Text>
+                                        <Text style={{ fontSize: '15px', fontWeight: 600 }}>{initialData?.memberName}</Text>
+                                    </Flex>
+                                </Col>
+                                <Col span={12}>
+                                    <Flex vertical gap={4}>
+                                        <Text style={{ color: '#64748B', fontSize: '12px' }}>휴대폰번호</Text>
+                                        <Text style={{ fontSize: '15px', fontWeight: 600 }}>{initialData?.mobile}</Text>
+                                    </Flex>
+                                </Col>
+                            </Row>
+                        </Card>
 
-                <Divider style={{ margin: 0 }} />
+                        <Card size="small" title={<Title level={5} style={{ margin: 0 }}>수강권 설정</Title>} style={{ borderRadius: '12px' }}>
+                            <Row gutter={12}>
+                                <Col span={16}>
+                                    <Form.Item
+                                        label="수강권명"
+                                        name="name"
+                                        rules={[{ required: true, message: '수강권명을 입력해주세요' }]}
+                                        style={{ marginBottom: 12 }}
+                                    >
+                                        <Input placeholder="수강권명을 입력해주세요" size="large" />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item
+                                        label="색상"
+                                        name="backgroundColor"
+                                        rules={[{ required: true }]}
+                                        style={{ marginBottom: 12 }}
+                                    >
+                                        <ColorPicker showText size="large" />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                <section>
-                    <Title level={4} style={{ marginBottom: '24px' }}>수강권 설정</Title>
-                    <Flex gap={24} wrap="wrap">
-                        <Form.Item
-                            label="수강권명"
-                            name="name"
-                            rules={[{ required: true, message: '수강권명을 입력해주세요' }]}
-                            style={{ flex: '1 1 400px' }}
-                        >
-                            <Input placeholder="수강권명을 입력해주세요" size="large" />
-                        </Form.Item>
-                        <Form.Item
-                            label="색상"
-                            name="backgroundColor"
-                            rules={[{ required: true }]}
-                        >
-                            <ColorPicker showText size="large" />
-                        </Form.Item>
-                    </Flex>
-
-                    <Form.Item label="수강권 종류" name="type" rules={[{ required: true }]}>
-                        <Radio.Group optionType="button" buttonStyle="solid">
-                            <Radio.Button value="COUNT">횟수권</Radio.Button>
-                            <Radio.Button value="PERIOD">기간권</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="이용 기간"
-                        name="dateRange"
-                        rules={[{ required: true, message: '이용 기간을 선택해주세요' }]}
-                    >
-                        <Flex align="center" gap={12}>
-                            <DatePicker.RangePicker
-                                size="large"
-                                style={{ flex: 1 }}
-                                format="YYYY-MM-DD"
-                            />
-                            {durationDays > 0 && (
-                                <Text style={{ color: '#879B7E', fontWeight: 600 }}>({durationDays}일)</Text>
-                            )}
-                        </Flex>
-                    </Form.Item>
-                </section>
-
-                <Divider style={{ margin: 0 }} />
-
-                <section>
-                    <Title level={4} style={{ marginBottom: '24px' }}>정책 및 상태</Title>
-                    <Flex vertical gap={24}>
-                        <Form.Item
-                            label="잔여 이용 횟수"
-                            name="remainingCnt"
-                            rules={[{ required: true, message: '잔여 횟수를 입력해주세요' }]}
-                        >
-                            <Flex align="center" gap={12}>
-                                <Input type="number" size="large" suffix="회" min={0} style={{ width: '160px' }} />
-                                {initialData && (
-                                    <Text style={{ color: '#64748B', fontSize: '13px' }}>
-                                        총 사용 가능 횟수: {initialData.totalUsableCnt}회
-                                    </Text>
-                                )}
-                            </Flex>
-                        </Form.Item>
-
-                        <Form.Item label="이용 제한" name="limitType" rules={[{ required: true }]}>
-                            <Radio.Group>
-                                <Radio value="WEEK">주간</Radio>
-                                <Radio value="MONTH">월간</Radio>
-                                <Radio value="NONE">이용 제한 없음</Radio>
-                            </Radio.Group>
-                        </Form.Item>
-
-                        {limitType !== 'NONE' && (
-                            <Form.Item name="limitCnt" rules={[{ required: true, message: '이용 횟수를 입력해주세요' }]}>
-                                <Input type="number" size="large" suffix="회 이용 가능" min={1} style={{ width: '200px' }} />
+                            <Form.Item label="수강권 종류" name="type" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+                                <Radio.Group optionType="button" buttonStyle="solid">
+                                    <Radio.Button value="COUNT">횟수권</Radio.Button>
+                                    <Radio.Button value="PERIOD">기간권</Radio.Button>
+                                </Radio.Group>
                             </Form.Item>
-                        )}
-
-                        {initialData && initialData.unpaidValue > 0 && (
-                            <Flex align="center" style={{ backgroundColor: '#FFF1F0', padding: '16px 24px', borderRadius: '12px', border: '1px solid #FFA39E' }}>
-                                <Text style={{ fontSize: '16px', color: '#64748B', flex: 1 }}>미수금</Text>
-                                <Text style={{ fontSize: '20px', fontWeight: 700, color: '#CF1322' }}>
-                                    {initialData.unpaidValue.toLocaleString()} 원
-                                </Text>
-                            </Flex>
-                        )}
-
-                        <Form.Item label="사용 가능 여부" name="usageAvailable" valuePropName="checked">
-                            <Switch checkedChildren="사용 가능" unCheckedChildren="사용 불가" />
-                        </Form.Item>
+                        </Card>
                     </Flex>
-                </section>
+                </Col>
 
-                <Flex justify="flex-end" gap={12} style={{ marginTop: '24px' }}>
-                    <Button size="large" onClick={() => navigate(-1)} style={{ width: '120px', borderRadius: '8px' }}>
-                        취소
-                    </Button>
-                    <Button
-                        type="primary"
-                        size="large"
-                        loading={loading}
-                        htmlType="submit"
-                        style={{ backgroundColor: '#1E293B', borderColor: '#1E293B', width: '120px', borderRadius: '8px' }}
-                    >
-                        수정하기
-                    </Button>
-                </Flex>
+                {/* Right Column: Policy & Status */}
+                <Col span={10}>
+                    <Flex vertical gap={12}>
+                        <Card size="small" title={<Title level={5} style={{ margin: 0 }}>이용 정책 및 상태</Title>} style={{ borderRadius: '12px' }}>
+                            <Form.Item
+                                label="이용 기간"
+                                required
+                                style={{ marginBottom: 12 }}
+                            >
+                                <Flex vertical gap={4}>
+                                    <Form.Item name="dateRange" rules={[{ required: true, message: '이용 기간을 선택해주세요' }]} noStyle>
+                                        <DatePicker.RangePicker
+                                            size="middle"
+                                            style={{ width: '100%' }}
+                                            format="YYYY-MM-DD"
+                                        />
+                                    </Form.Item>
+                                    {durationDays > 0 && (
+                                        <Text style={{ color: '#879B7E', fontWeight: 600, fontSize: '13px' }}>설정 기간: {durationDays}일</Text>
+                                    )}
+                                </Flex>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="잔여 이용 횟수"
+                                required
+                                style={{ marginBottom: 12 }}
+                            >
+                                <Flex vertical gap={4}>
+                                    <Form.Item name="remainingCnt" rules={[{ required: true, message: '잔여 횟수를 입력해주세요' }]} noStyle>
+                                        <Input type="number" size="middle" suffix="회" min={0} style={{ width: '120px' }} />
+                                    </Form.Item>
+                                    {initialData && (
+                                        <Text style={{ color: '#64748B', fontSize: '12px' }}>
+                                            전체 사용 가능: {initialData.totalUsableCnt}회
+                                        </Text>
+                                    )}
+                                </Flex>
+                            </Form.Item>
+
+                            <Form.Item label="이용 제한" name="limitType" rules={[{ required: true }]} style={{ marginBottom: limitType !== 'NONE' ? 8 : 12 }}>
+                                <Radio.Group size="small">
+                                    <Radio value="WEEK">주간</Radio>
+                                    <Radio value="MONTH">월간</Radio>
+                                    <Radio value="NONE">무제한</Radio>
+                                </Radio.Group>
+                            </Form.Item>
+
+                            {limitType !== 'NONE' && (
+                                <Form.Item name="limitCnt" rules={[{ required: true, message: '이용 횟수를 입력해주세요' }]} style={{ marginBottom: 12 }}>
+                                    <Input type="number" size="small" suffix="회 이용 가능" min={1} style={{ width: '140px' }} />
+                                </Form.Item>
+                            )}
+
+                            {initialData && initialData.unpaidValue > 0 && (
+                                <Flex align="center" style={{ backgroundColor: '#FFF1F0', padding: '10px 14px', borderRadius: '8px', border: '1px solid #FFA39E', marginBottom: 16 }}>
+                                    <Text style={{ fontSize: '13px', color: '#CF1322', flex: 1 }}>미수금</Text>
+                                    <Text style={{ fontSize: '15px', fontWeight: 700, color: '#CF1322' }}>
+                                        {initialData.unpaidValue.toLocaleString()} 원
+                                    </Text>
+                                </Flex>
+                            )}
+
+                            <Form.Item label="사용 가능 여부" name="usageAvailable" valuePropName="checked" style={{ marginBottom: 0 }}>
+                                <Switch checkedChildren="사용 가능" unCheckedChildren="사용 불가" />
+                            </Form.Item>
+                        </Card>
+                    </Flex>
+                </Col>
+            </Row>
+
+            <Flex justify="flex-end" gap={12} style={{ marginTop: '24px' }}>
+                <Button size="large" onClick={() => navigate(-1)} style={{ width: '120px', borderRadius: '10px' }}>
+                    취소
+                </Button>
+                <Button
+                    type="primary"
+                    size="large"
+                    loading={loading}
+                    htmlType="submit"
+                    style={{ backgroundColor: '#879B7E', borderColor: '#879B7E', width: '120px', borderRadius: '10px', fontWeight: 600 }}
+                >
+                    수정하기
+                </Button>
             </Flex>
         </Form>
     );
 };
+

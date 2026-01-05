@@ -46,10 +46,10 @@ const OperationPolicyView = () => {
     return (
         <Flex vertical gap={24} style={{ padding: '32px', minHeight: '100%', backgroundColor: '#F8FAFC' }}>
             <Flex vertical>
-                <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>
                     운영 정책 설정
                 </Title>
-                <Text style={{ color: '#64748B', fontSize: '14px' }}>
+                <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>
                     센터 정보, 수업 예약 규칙 및 자동 알림 설정을 관리합니다.
                 </Text>
             </Flex>

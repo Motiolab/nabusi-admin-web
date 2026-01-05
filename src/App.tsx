@@ -11,6 +11,8 @@ import MemberDetailView from '@/views/member/MemberDetailView'
 import TeacherView from '@/views/teacher/TeacherView'
 import TeacherDetailView from '@/views/teacher/TeacherDetailView'
 import WellnessClassView from '@/views/wellnessclass/WellnessClassView'
+import WellnessLectureDetailView from '@/views/wellnessclass/WellnessLectureDetailView'
+import WellnessLectureUpdateView from '@/views/wellnessclass/WellnessLectureUpdateView'
 import WellnessClassCreateView from '@/views/wellnessclass/WellnessClassCreateView'
 import WellnessTicketView from '@/views/wellnessticket/WellnessTicketView'
 import WellnessTicketCreateView from '@/views/wellnessticket/WellnessTicketCreateView'
@@ -47,7 +49,9 @@ function App() {
       <Route path="/member/detail/:id" element={<MemberDetailView />} />
       <Route path="/teacher" element={<TeacherView />} />
       <Route path="/teacher/detail/:id" element={<TeacherDetailView />} />
-      <Route path="/wellness-class" element={<WellnessClassView />} />
+      <Route path="/wellness-lecture" element={<WellnessClassView />} />
+      <Route path="/wellness-lecture/detail/:id" element={<WellnessLectureDetailView />} />
+      <Route path="/wellness-lecture/update/:id" element={<WellnessLectureUpdateView />} />
       <Route path="/wellness-class/create" element={<WellnessClassCreateView />} />
       <Route path="/wellness-ticket" element={<WellnessTicketView />} />
       <Route path="/wellness-ticket/create" element={<WellnessTicketCreateView />} />

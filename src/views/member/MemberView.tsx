@@ -106,8 +106,8 @@ const MemberView = () => {
         <div style={{ padding: '24px' }}>
             <Flex vertical gap={24}>
                 <div>
-                    <Title level={2} style={{ margin: 0, fontSize: '24px' }}>회원 관리</Title>
-                    <Text type="secondary">센터의 모든 회원 목록을 관리하고 필터링할 수 있습니다.</Text>
+                    <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>회원 관리</Title>
+                    <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>센터의 모든 회원 목록을 관리하고 필터링할 수 있습니다.</Text>
                 </div>
 
                 <MemberSearchFilter

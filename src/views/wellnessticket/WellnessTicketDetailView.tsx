@@ -90,7 +90,7 @@ const WellnessTicketDetailView = () => {
                         }}
                     />
                     <Flex vertical>
-                        <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                        <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#879B7E' }}>
                             {ticket.name}
                         </Title>
                         <Text style={{ color: '#64748B' }}>수강권 상세 정보 및 발급 이력</Text>
@@ -131,7 +131,7 @@ const WellnessTicketDetailView = () => {
                         icon={<Edit3 size={18} />}
                         size="large"
                         onClick={() => navigate(`/wellness-ticket/update/${id}`)}
-                        style={{ backgroundColor: '#1E293B', borderColor: '#1E293B', borderRadius: '8px' }}
+                        style={{ backgroundColor: '#879B7E', borderColor: '#879B7E', borderRadius: '8px' }}
                     >
                         수정하기
                     </Button>

@@ -41,10 +41,10 @@ const NoticeView = () => {
     return (
         <Flex vertical gap={24} style={{ padding: '32px', minHeight: '100%', backgroundColor: '#F8FAFC' }}>
             <Flex vertical>
-                <Title level={2} style={{ margin: 0, fontWeight: 700, color: '#1E293B' }}>
+                <Title level={2} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>
                     공지사항
                 </Title>
-                <Text style={{ color: '#64748B', fontSize: '14px' }}>
+                <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>
                     센터의 공지사항을 관리하고 회원들에게 알림을 보냅니다.
                 </Text>
             </Flex>

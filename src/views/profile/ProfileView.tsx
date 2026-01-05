@@ -66,8 +66,8 @@ const ProfileView = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Title level={2} className={styles.title}>내 프로필</Title>
-                <Text className={styles.subtitle}>계정 정보 및 설정을 관리합니다.</Text>
+                <Title level={2} className={styles.title} style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#879B7E' }}>내 프로필</Title>
+                <Text type="secondary" className={styles.subtitle} style={{ fontSize: '14px', color: '#64748B' }}>계정 정보 및 설정을 관리합니다.</Text>
             </div>
 
             <div className={styles.contentCard}>

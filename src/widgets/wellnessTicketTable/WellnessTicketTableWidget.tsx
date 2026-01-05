@@ -41,7 +41,7 @@ export const WellnessTicketTableWidget = ({ data, loading }: WellnessTicketTable
             dataIndex: 'name',
             key: 'name',
             render: (name: string, record) => (
-                <Link to={`/wellness-ticket/${record.id}`} style={{ fontWeight: 600, color: '#1E293B' }}>
+                <Link to={`/wellness-ticket/${record.id}`} style={{ fontWeight: 600, color: '#879B7E' }}>
                     {name}
                 </Link>
             ),

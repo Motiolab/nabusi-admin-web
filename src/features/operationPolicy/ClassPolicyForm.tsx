@@ -89,7 +89,7 @@ export const ClassPolicyForm = () => {
                 <Card
                     title={
                         <Flex align="center" gap={8}>
-                            <CalendarClock size={20} color="#1E293B" />
+                            <CalendarClock size={20} color="#879B7E" />
                             <Text strong>예약 시간 정책</Text>
                         </Flex>
                     }
@@ -146,7 +146,7 @@ export const ClassPolicyForm = () => {
                 <Card
                     title={
                         <Flex align="center" gap={8}>
-                            <UserX size={20} color="#1E293B" />
+                            <UserX size={20} color="#879B7E" />
                             <Text strong>자동 결석 정책</Text>
                         </Flex>
                     }
@@ -171,7 +171,7 @@ export const ClassPolicyForm = () => {
                     size="large"
                     loading={loading}
                     htmlType="submit"
-                    style={{ backgroundColor: '#1E293B', width: '200px', borderRadius: '8px' }}
+                    style={{ backgroundColor: '#879B7E', width: '200px', borderRadius: '8px' }}
                 >
                     저장하기
                 </Button>

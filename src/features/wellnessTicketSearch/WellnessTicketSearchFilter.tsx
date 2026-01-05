@@ -52,7 +52,7 @@ export const WellnessTicketSearchFilter = ({
                 type="primary"
                 icon={<Plus size={18} />}
                 onClick={() => navigate('/wellness-ticket/create')}
-                style={{ height: '44px', borderRadius: '8px', backgroundColor: '#1E293B', borderColor: '#1E293B' }}
+                style={{ height: '44px', borderRadius: '8px', backgroundColor: '#879B7E', borderColor: '#879B7E' }}
             >
                 수강권 추가
             </Button>
