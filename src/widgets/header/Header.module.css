@@ -1,0 +1,39 @@
+.header {
+    height: 64px;
+    padding: 0 24px;
+    background-color: var(--White);
+    border-bottom: 1px solid var(--Neutral-200);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.centerInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--Neutral-500);
+    background-color: var(--Neutral-100);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--Neutral-900);
+}
+
+.switchButton {
+    color: var(--Primary) !important;
+    font-weight: 600 !important;
+}
+
+.switchButton:hover {
+    background-color: var(--Primary-50) !important;
+}

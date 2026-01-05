@@ -1,0 +1,35 @@
+@font-face {
+  font-family: Pretendard;
+  src: url('./assets/font/pretendard/PretendardVariable.ttf') format('woff2');
+  font-weight: 45 920;
+  font-display: block;
+}
+
+:root {
+  --Primary: #879B7E;
+  --Primary-Hover: #758a6c;
+  --Neutral-900: #1A1C1E;
+  --Neutral-600: #64707D;
+  --Neutral-200: #E2E8F0;
+  --Neutral-100: #F1F5F9;
+  --White: #FFFFFF;
+  --Sidebar-Width: 240px;
+  --Sidebar-Collapsed-Width: 80px;
+
+  font-family: Pretendard, system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--Neutral-900);
+  background-color: #F8FAFC;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+}
