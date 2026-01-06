@@ -3,7 +3,10 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import { Sidebar } from '@/widgets/sidebar/Sidebar'
 import { Menu, X } from 'lucide-react'
 import LoginView from '@/views/login/LoginView'
+import SignupView from '@/views/login/SignupView'
 import LoginSuccessView from '@/views/login/LoginSuccessView'
+import PrivacyPolicyView from '@/views/legal/PrivacyPolicyView'
+import { Footer } from '@/widgets/footer/Footer'
 import CenterSelectView from '@/views/centerselect/CenterSelectView'
 import HomeView from '@/views/home/HomeView'
 import MemberView from '@/views/member/MemberView'
@@ -35,6 +38,8 @@ function App() {
 
   const isLoginPage = location.pathname === '/login' ||
     location.pathname === '/login/success' ||
+    location.pathname === '/signup' ||
+    location.pathname === '/privacy-policy' ||
     location.pathname === '/centerselect'
 
   const toggleMobileMenu = () => setIsMobileOpen(!isMobileOpen)
@@ -42,6 +47,8 @@ function App() {
   const routesContent = (
     <Routes>
       <Route path="/login" element={<LoginView />} />
+      <Route path="/signup" element={<SignupView />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyView />} />
       <Route path="/login/success" element={<LoginSuccessView />} />
       <Route path="/centerselect" element={<CenterSelectView />} />
       <Route path="/" element={<HomeView />} />
@@ -69,27 +76,30 @@ function App() {
   );
 
   return (
-    <div className="appContainer">
-      {isLoginPage ? (
-        <main className="loginContainer">
-          {routesContent}
-        </main>
-      ) : (
-        <CenterGuard>
-          <Sidebar
-            isMobileOpen={isMobileOpen}
-          />
-          <button className="mobileMenuButton" onClick={toggleMobileMenu}>
-            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-          <main className="contentArea">
-            <Header />
-            <div className="viewScrollContainer">
-              {routesContent}
-            </div>
+    <div className="layoutRoot">
+      <div className="layoutBody">
+        {isLoginPage ? (
+          <main className="loginContainer">
+            {routesContent}
+            <Footer />
           </main>
-        </CenterGuard>
-      )}
+        ) : (
+          <CenterGuard>
+            <Sidebar
+              isMobileOpen={isMobileOpen}
+            />
+            <button className="mobileMenuButton" onClick={toggleMobileMenu}>
+              {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            <main className="contentArea">
+              <Header />
+              <div className="viewScrollContainer">
+                {routesContent}
+              </div>
+            </main>
+          </CenterGuard>
+        )}
+      </div>
     </div>
   )
 }

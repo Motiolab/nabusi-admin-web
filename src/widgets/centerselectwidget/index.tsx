@@ -26,7 +26,7 @@ const CenterSelectWidget = () => {
 
     const requestCenterListByAdminUser = async () => {
         try {
-            await adminLoginSuccess();
+            // await adminLoginSuccess();
             const redirectUrlAfterLogin = getRedirectUrlAfterLogin();
             if (redirectUrlAfterLogin) {
                 setRedirectUrlAfterLogin('undefined');
