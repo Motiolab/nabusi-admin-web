@@ -17,10 +17,9 @@ import {
 
 interface SidebarProps {
     isMobileOpen?: boolean;
-    onCloseMobile?: () => void;
 }
 
-export const Sidebar = ({ isMobileOpen, onCloseMobile }: SidebarProps) => {
+export const Sidebar = ({ isMobileOpen }: SidebarProps) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const toggleCollapse = () => setIsCollapsed(!isCollapsed);

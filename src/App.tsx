@@ -78,7 +78,6 @@ function App() {
         <CenterGuard>
           <Sidebar
             isMobileOpen={isMobileOpen}
-            onCloseMobile={() => setIsMobileOpen(false)}
           />
           <button className="mobileMenuButton" onClick={toggleMobileMenu}>
             {isMobileOpen ? <X size={24} /> : <Menu size={24} />}

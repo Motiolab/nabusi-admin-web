@@ -11,8 +11,7 @@ import {
     Divider,
     message,
     Modal,
-    Breadcrumb,
-    Avatar
+    Breadcrumb
 } from 'antd';
 import {
     ArrowLeftOutlined,
@@ -20,8 +19,7 @@ import {
     MailOutlined,
     PhoneOutlined,
     DeleteOutlined,
-    UndoOutlined,
-    UserOutlined
+    UndoOutlined
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/app/store';

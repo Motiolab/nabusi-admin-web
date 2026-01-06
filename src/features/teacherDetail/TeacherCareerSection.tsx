@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, Flex, Typography, Button, Input, message, Divider } from 'antd';
+import { Card, Flex, Typography, Button, Input, message } from 'antd';
 import { EditOutlined, CheckOutlined, CloseOutlined, TrophyOutlined } from '@ant-design/icons';
 import { updateTeacherCareerById } from '@/entities/teacher/api';
 
