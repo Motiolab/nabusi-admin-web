@@ -17,6 +17,7 @@ import WellnessClassView from '@/views/wellnessclass/WellnessClassView'
 import WellnessLectureDetailView from '@/views/wellnessclass/WellnessLectureDetailView'
 import WellnessLectureUpdateView from '@/views/wellnessclass/WellnessLectureUpdateView'
 import WellnessClassCreateView from '@/views/wellnessclass/WellnessClassCreateView'
+import WellnessClassDetailView from '@/views/wellnessclass/WellnessClassDetailView'
 import WellnessTicketView from '@/views/wellnessticket/WellnessTicketView'
 import WellnessTicketCreateView from '@/views/wellnessticket/WellnessTicketCreateView'
 import WellnessTicketDetailView from '@/views/wellnessticket/WellnessTicketDetailView'
@@ -60,6 +61,7 @@ function App() {
       <Route path="/wellness-lecture/detail/:id" element={<WellnessLectureDetailView />} />
       <Route path="/wellness-lecture/update/:id" element={<WellnessLectureUpdateView />} />
       <Route path="/wellness-class/create" element={<WellnessClassCreateView />} />
+      <Route path="/wellness-class/detail/:id" element={<WellnessClassDetailView />} />
       <Route path="/wellness-ticket" element={<WellnessTicketView />} />
       <Route path="/wellness-ticket/create" element={<WellnessTicketCreateView />} />
       <Route path="/wellness-ticket/:id" element={<WellnessTicketDetailView />} />

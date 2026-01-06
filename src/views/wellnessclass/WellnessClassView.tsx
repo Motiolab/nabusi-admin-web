@@ -8,6 +8,9 @@ import type { IGetWellnessLectureAdminResponseV1 } from '@/entities/wellnessLect
 import { WellnessClassSearchFilter } from '@/features/wellnessClassSearch/WellnessClassSearchFilter';
 import type { WellnessClassFilterValues } from '@/features/wellnessClassSearch/WellnessClassSearchFilter';
 import { WellnessClassTableWidget } from '@/widgets/wellnessClassTable/WellnessClassTableWidget';
+import { getWellnessClassAllByCenterId } from '@/entities/wellnessClass/api';
+import type { IGetWellnessClassAllAdminResponseV1 } from '@/entities/wellnessClass/api';
+import { WellnessGroupClassTableWidget } from '@/widgets/wellnessGroupClassTable/WellnessGroupClassTableWidget';
 
 const { Title, Text } = Typography;
 
@@ -17,16 +20,24 @@ const WellnessClassView = () => {
     const [filteredList, setFilteredList] = useState<IGetWellnessLectureAdminResponseV1[]>([]);
     const [loading, setLoading] = useState(false);
 
+    const [groupClassList, setGroupClassList] = useState<IGetWellnessClassAllAdminResponseV1[]>([]);
+    const [groupLoading, setGroupLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState('class');
+
     const [filters, setFilters] = useState<WellnessClassFilterValues>({
         date: dayjs(),
         searchText: '',
     });
 
     useEffect(() => {
-        if (selectedCenterId && filters.date) {
-            fetchClasses();
+        if (selectedCenterId) {
+            if (activeTab === 'class' && filters.date) {
+                fetchClasses();
+            } else if (activeTab === 'group') {
+                fetchGroupClasses();
+            }
         }
-    }, [selectedCenterId, filters.date]);
+    }, [selectedCenterId, filters.date, activeTab]);
 
     const fetchClasses = async () => {
         if (!selectedCenterId || !filters.date) return;
@@ -42,6 +53,21 @@ const WellnessClassView = () => {
             message.error('수업 목록을 불러오는데 실패했습니다.');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchGroupClasses = async () => {
+        if (!selectedCenterId) return;
+
+        setGroupLoading(true);
+        try {
+            const res = await getWellnessClassAllByCenterId(selectedCenterId);
+            setGroupClassList(res.data);
+        } catch (error) {
+            console.error('Failed to fetch group classes:', error);
+            message.error('그룹 수업 목록을 불러오는데 실패했습니다.');
+        } finally {
+            setGroupLoading(false);
         }
     };
 
@@ -102,9 +128,18 @@ const WellnessClassView = () => {
             key: 'group',
             label: '그룹 수업',
             children: (
-                <div style={{ padding: '40px', textAlign: 'center', backgroundColor: '#FFFFFF', borderRadius: '16px', border: '1px solid #F1F5F9' }}>
-                    <Text type="secondary">그룹 수업 기능은 준비 중입니다.</Text>
-                </div>
+                <Flex vertical gap={24}>
+                    <div style={{ position: 'relative' }}>
+                        <Flex align="center" gap={8} style={{ marginBottom: '16px' }}>
+                            <Text strong style={{ fontSize: '18px' }}>그룹 수업</Text>
+                            <Badge count={groupClassList.length} showZero color="#879B7E" style={{ backgroundColor: '#F0F4EF', color: '#879B7E', boxShadow: 'none', fontWeight: 600 }} />
+                        </Flex>
+                        <WellnessGroupClassTableWidget
+                            data={groupClassList}
+                            loading={groupLoading}
+                        />
+                    </div>
+                </Flex>
             ),
         },
     ];
@@ -118,7 +153,8 @@ const WellnessClassView = () => {
                 </div>
 
                 <Tabs
-                    defaultActiveKey="class"
+                    activeKey={activeTab}
+                    onChange={setActiveTab}
                     items={tabItems}
                     style={{ marginTop: '8px' }}
                     className="custom-tabs"
