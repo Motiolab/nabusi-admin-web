@@ -1,158 +1,97 @@
-import { Typography } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const { Text } = Typography;
-
 const FooterContainer = styled.footer`
-    padding: 80px 24px 60px;
-    background-color: #fcfcfc;
-    border-top: 1px solid #f0f0f0;
-    color: #8E949E;
-    font-size: 13px;
-    line-height: 1.8;
-`;
-
-const FooterContent = styled.div`
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 60px 0;
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
     width: 100%;
 `;
 
-const FooterTop = styled.div`
+const FooterContent = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 48px;
-    flex-wrap: wrap;
-    gap: 40px;
-`;
-
-const BrandSection = styled.div`
-    flex: 1;
-    min-width: 280px;
-`;
-
-const BrandTitle = styled.div`
-    font-size: 18px;
-    font-weight: 700;
-    color: #4A4F57;
-    margin-bottom: 12px;
-    letter-spacing: -0.2px;
-`;
-
-const InfoGrid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px 24px;
-    flex: 2;
-`;
-
-const InfoItem = styled.div`
-    display: flex;
-    gap: 8px;
-    align-items: baseline;
-`;
-
-const InfoLabel = styled.span`
-    color: #5A606A;
-    font-weight: 600;
-    white-space: nowrap;
-    min-width: 100px;
-`;
-
-const InfoValue = styled(Text)`
-    color: #8E949E !important;
-`;
-
-const FooterBottom = styled.div`
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding-top: 32px;
-    border-top: 1px solid #f5f5f5;
-    flex-wrap: wrap;
     gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 `;
 
-const FooterLinks = styled.div`
+const FooterLogo = styled.div`
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #999;
+`;
+
+const CompanyInfo = styled.div`
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+
+    p {
+        margin: 4px 0;
+    }
+
+    span {
+        margin: 0 8px;
+        display: inline-block;
+    }
+`;
+
+const FooterLinks = styled.ul`
     display: flex;
-    gap: 24px;
-    font-weight: 600;
-    
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
     a {
-        color: #5A606A;
+        color: #666;
+        font-size: 0.9rem;
         text-decoration: none;
-        transition: color 0.2s ease;
+        
         &:hover {
-            color: #879B7E;
+            text-decoration: underline;
         }
     }
 `;
 
-const Copyright = styled.div`
-    color: #B0B5BD;
-    font-size: 12px;
-    font-weight: 400;
+const Copyright = styled.p`
+    color: #999;
+    font-size: 0.85rem;
+    margin-top: 10px;
 `;
 
 export const Footer = () => {
     return (
-        <FooterContainer>
-            <FooterContent>
-                <FooterTop>
-                    <BrandSection>
-                        <BrandTitle>Nabusi Admin</BrandTitle>
-                        <Text type="secondary" style={{ display: 'block', maxWidth: '240px' }}>
-                            고요히 나를 만나는 시간, <br />
-                            나부시 관리자를 위한 파트너 포털입니다.
-                        </Text>
-                    </BrandSection>
-
-                    <InfoGrid>
-                        <InfoItem>
-                            <InfoLabel>상호명</InfoLabel>
-                            <InfoValue>모티오랩(Motiolab)</InfoValue>
-                        </InfoItem>
-                        <InfoItem>
-                            <InfoLabel>대표자명</InfoLabel>
-                            <InfoValue>권준학</InfoValue>
-                        </InfoItem>
-                        <InfoItem>
-                            <InfoLabel>사업자번호</InfoLabel>
-                            <InfoValue>720-01-03597</InfoValue>
-                        </InfoItem>
-                        <InfoItem>
-                            <InfoLabel>통신판매업</InfoLabel>
-                            <InfoValue>[신고 준비중]</InfoValue>
-                        </InfoItem>
-                        <InfoItem>
-                            <InfoLabel>이메일</InfoLabel>
-                            <InfoValue>junhak.kwon@motiolab.com</InfoValue>
-                        </InfoItem>
-                        <InfoItem>
-                            <InfoLabel>개인정보책임</InfoLabel>
-                            <InfoValue>권준학</InfoValue>
-                        </InfoItem>
-                        <InfoItem style={{ gridColumn: '1 / -1' }}>
-                            <InfoLabel>주소</InfoLabel>
-                            <InfoValue>서울특별시 (상세주소 미공개)</InfoValue>
-                        </InfoItem>
-                    </InfoGrid>
-                </FooterTop>
-
-                <FooterBottom>
-                    <FooterLinks>
-                        <a href="mailto:junhak.kwon@motiolab.com">고객센터 문의</a>
-                        <Link to="/privacy-policy">개인정보처리방침</Link>
-                        <a href="#">이용약관</a>
+        <FooterContainer className="footer">
+            <div className="container">
+                <FooterContent className="footer-content">
+                    <FooterLogo className="footer-logo">Nabusi</FooterLogo>
+                    <CompanyInfo className="company-info">
+                        <p>
+                            <span>상호명 : 모티오랩(Motiolab)</span>
+                            <span>대표자명 : 권준학</span>
+                            <span>사업자등록번호 : 720-01-03597</span>
+                        </p>
+                        <p>
+                            <span>통신판매업신고번호 : [신고 준비중]</span>
+                            <span>주소 : 서울특별시 (상세주소 미공개)</span>
+                        </p>
+                        <p>
+                            <span>개인정보관리책임자 : 권준학</span>
+                            <span>고객센터 : junhak.kwon@motiolab.com</span>
+                        </p>
+                    </CompanyInfo>
+                    <FooterLinks className="footer-links">
+                        <li><a href="mailto:junhak.kwon@motiolab.com">고객센터 문의</a></li>
+                        <li><Link to="/privacy-policy">개인정보처리방침</Link></li>
                     </FooterLinks>
-
-                    <Copyright>
-                        © 2025 Motiolab. All rights reserved.
-                    </Copyright>
-                </FooterBottom>
-            </FooterContent>
+                    <Copyright className="copyright">© 2025 Motiolab. All rights reserved.</Copyright>
+                </FooterContent>
+            </div>
         </FooterContainer>
     );
 };

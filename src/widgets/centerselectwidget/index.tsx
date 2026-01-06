@@ -4,7 +4,7 @@ import { getCenterListByAdminUser } from '@/entities/member/api';
 import { Fragment, useEffect, useState } from 'react';
 import { setSelectedCenterId } from '@/entities/selectedCenterId/model/reducer';
 import { useNavigate } from "react-router-dom";
-import { adminLoginSuccess } from "@/entities/account/api";
+// import { adminLoginSuccess } from "@/entities/account/api";
 import { getRedirectUrlAfterLogin, setRedirectUrlAfterLogin } from "@/shared/lib/redirect";
 import { Flex, Badge } from "antd";
 import { useSelector, useDispatch } from "react-redux";
