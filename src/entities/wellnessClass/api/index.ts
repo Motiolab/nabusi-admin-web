@@ -86,7 +86,6 @@ export const createWellnessClassByCenterId = (centerId: number, newClassName: st
     });
 };
 
-export const deleteWellnessClass = (centerId: number, id: number, isSendNoti: boolean): Promise<AxiosResponse<boolean>> => {
-    // return api.delete(`/v1/admin/wellness-class/${centerId}?id=${id}&isSendNoti=${isSendNoti}`);
-    return api.delete(`/${centerId}?id=${id}&isSendNoti=${isSendNoti}`);
+export const deleteWellnessClass = (centerId: number, id: number): Promise<AxiosResponse<boolean>> => {
+    return api.delete(`/v1/admin/wellness-class/${centerId}?id=${id}`);
 };

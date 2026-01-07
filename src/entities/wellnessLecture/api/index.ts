@@ -106,3 +106,27 @@ export interface IUpdateWellnessLectureAdminRequestV1 {
 export const updateWellnessLecture = (request: IUpdateWellnessLectureAdminRequestV1): Promise<AxiosResponse<boolean>> => {
     return api.put(`/v1/admin/wellness-lecture/${request.centerId}`, request);
 };
+
+
+
+export interface IUpdateWellnessLectureListAdminRequestV1 {
+    idList: number[];
+    name: string;
+    description: string;
+    centerId: number;
+    maxReservationCnt: number;
+    room: string;
+    lectureImageUrlList: string[];
+    teacherId: number;
+    wellnessLectureTypeId: number;
+    wellnessTicketManagementIdList: number[];
+    price: number | undefined;
+}
+
+export const updateWellnessLectureList = (request: IUpdateWellnessLectureListAdminRequestV1): Promise<AxiosResponse<boolean>> => {
+    return api.put(`/v1/admin/wellness-lecture-list/${request.centerId}`, request);
+};
+
+export const deleteWellnessLectureList = (centerId: number, idList: number[]): Promise<AxiosResponse<boolean>> => {
+    return api.delete(`/v1/admin/wellness-lecture-list/${centerId}`, { data: idList });
+};

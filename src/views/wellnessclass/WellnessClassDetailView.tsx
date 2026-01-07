@@ -16,6 +16,8 @@ import {
     Switch,
     Modal,
     message,
+    Checkbox,
+    Tooltip,
 } from 'antd';
 import {
     ArrowLeftOutlined,
@@ -23,6 +25,8 @@ import {
 import type { ColumnsType } from 'antd/es/table';
 import { getWellnessClassDetailWithLectureById, deleteWellnessClass } from '@/entities/wellnessClass/api';
 import type { IGetWellnessClassDetailWithLectureAdminResponseV2, IWellnessLectureInClass } from '@/entities/wellnessClass/api';
+import { deleteWellnessLectureList } from '@/entities/wellnessLecture/api';
+import { getReservationListByWellnessLectureId } from '@/entities/reservation/api';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/app/store';
 import { formatTimeRange } from '@/shared/lib/format';
@@ -37,6 +41,8 @@ export default function WellnessClassDetailView() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<IGetWellnessClassDetailWithLectureAdminResponseV2 | null>(null);
     const [hideDeleted, setHideDeleted] = useState(true);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+    const [activeCounts, setActiveCounts] = useState<Record<number, number>>({});
 
     const filteredLectures = data?.lectureList.filter(lecture => !hideDeleted || (!lecture.isDelete && !lecture.isPast)) || [];
 
@@ -51,6 +57,25 @@ export default function WellnessClassDetailView() {
         try {
             const res = await getWellnessClassDetailWithLectureById(centerId!, Number(id));
             setData(res.data);
+
+            // Fetch reservations for each lecture to get active counts
+            if (res.data.lectureList && res.data.lectureList.length > 0) {
+                const cancelStatuses = ['ADMIN_CANCELED_RESERVATION', 'MEMBER_CANCELED_RESERVATION', 'MEMBER_CANCELED_RESERVATION_REFUND'];
+                const counts: Record<number, number> = {};
+
+                // Fetch in parallel
+                await Promise.all(res.data.lectureList.map(async (lecture) => {
+                    try {
+                        const reserveRes = await getReservationListByWellnessLectureId(centerId!, lecture.id);
+                        const activeCount = reserveRes.data.filter(r => !cancelStatuses.includes(r.reservationStatus)).length;
+                        counts[lecture.id] = activeCount;
+                    } catch (err) {
+                        console.error(`Failed to fetch reservations for lecture ${lecture.id}:`, err);
+                        counts[lecture.id] = lecture.currentReservationCnt;
+                    }
+                }));
+                setActiveCounts(counts);
+            }
         } catch (error) {
             console.error('Failed to fetch group class detail:', error);
         } finally {
@@ -58,23 +83,62 @@ export default function WellnessClassDetailView() {
         }
     };
 
-    const handleCancelClass = () => {
+    const handleDeleteClass = () => {
         Modal.confirm({
-            title: '그룹 수업 폐강',
-            content: '정말로 이 그룹 수업을 폐강하시겠습니까? 이미 지난 수업 혹은 예약자가 있는 수업은 제외하고 폐강됩니다.',
+            title: '그룹 수업 삭제',
+            content: '정말로 이 그룹 수업을 삭제하시겠습니까? 삭제 시 해당 수업이 모두 폐강 됩니다.',
+            okText: '삭제',
+            okType: 'danger',
+            cancelText: '취소',
+            onOk: async () => {
+                try {
+                    await deleteWellnessClass(centerId!, Number(id));
+                    message.success('그룹 수업이 삭제되었습니다.');
+                    navigate('/wellness-lecture');
+                } catch (error) {
+                    message.error('그룹 수업 삭제에 실패했습니다.');
+                }
+            }
+        });
+    };
+
+    const handleBulkCancel = () => {
+        if (selectedRowKeys.length === 0) return;
+
+        Modal.confirm({
+            title: '선택한 수업 폐강',
+            content: (
+                <Flex vertical gap={8}>
+                    <Text>정말로 선택한 {selectedRowKeys.length}개의 수업을 폐강하시겠습니까?</Text>
+                    <Text type="secondary" style={{ fontSize: '12px' }}>
+                        * 이미 지난 수업 혹은 예약자가 존재하는 수업은 폐강할 수 없습니다.
+                    </Text>
+                </Flex>
+            ),
             okText: '폐강',
             okType: 'danger',
             cancelText: '취소',
             onOk: async () => {
                 try {
-                    await deleteWellnessClass(centerId!, Number(id), true);
-                    message.success('그룹 수업이 폐강되었습니다.');
-                    navigate('/wellness-lecture');
+                    await deleteWellnessLectureList(centerId!, selectedRowKeys.map(Number));
+                    message.success('선택한 수업이 폐강되었습니다.');
+                    setSelectedRowKeys([]);
+                    fetchDetail();
                 } catch (error) {
-                    message.error('그룹 수업 폐강에 실패했습니다.');
+                    message.error('수업 폐강에 실패했습니다.');
                 }
             }
         });
+    };
+
+    const handleEditSelected = () => {
+        if (selectedRowKeys.length === 0) return;
+
+        if (selectedRowKeys.length === 1) {
+            navigate(`/wellness-lecture/update/${selectedRowKeys[0]}`);
+        } else {
+            navigate(`/wellness-lecture-list/update?ids=${selectedRowKeys.join(',')}`);
+        }
     };
 
     const lectureColumns: ColumnsType<IWellnessLectureInClass> = [
@@ -114,7 +178,7 @@ export default function WellnessClassDetailView() {
             key: 'reservations',
             align: 'center' as const,
             render: (_: any, record: IWellnessLectureInClass) => (
-                <Text>{record.currentReservationCnt} / {record.maxReservationCnt} 명</Text>
+                <Text>{activeCounts[record.id] ?? record.currentReservationCnt} / {record.maxReservationCnt} 명</Text>
             ),
         },
         {
@@ -177,8 +241,15 @@ export default function WellnessClassDetailView() {
                     </Flex>
                 </Flex>
                 <Space>
-                    <Button onClick={() => navigate(`/wellness-class/update/${data.id}`)}>수정</Button>
-                    <Button danger onClick={handleCancelClass}>폐강</Button>
+                    <Tooltip title={data.lectureList.some(l => (activeCounts[l.id] ?? l.currentReservationCnt) > 0) ? "예약자가 존재하는 수업이 있어 삭제할 수 없습니다." : ""}>
+                        <Button
+                            danger
+                            onClick={handleDeleteClass}
+                            disabled={data.lectureList.some(l => (activeCounts[l.id] ?? l.currentReservationCnt) > 0)}
+                        >
+                            삭제
+                        </Button>
+                    </Tooltip>
                 </Space>
             </Flex>
 
@@ -216,7 +287,7 @@ export default function WellnessClassDetailView() {
                         <Flex vertical gap={8}>
                             <Text type="secondary">수업 현황</Text>
                             <div style={{ minHeight: '40px', display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-                                <Text strong style={{ fontSize: '24px', color: '#879B7E' }}>{data.pastClassesCount + data.upcomingClassesCount}</Text>
+                                <Text strong style={{ fontSize: '24px', color: '#879B7E' }}>{Number(data.pastClassesCount) + Number(data.upcomingClassesCount)}</Text>
                                 <Text type="secondary" style={{ fontSize: '14px' }}>전체 (지난 {data.pastClassesCount} / 예정 {data.upcomingClassesCount})</Text>
                             </div>
                         </Flex>
@@ -241,25 +312,84 @@ export default function WellnessClassDetailView() {
                         title={
                             <Flex justify="space-between" align="center">
                                 <Title level={4} style={{ margin: 0 }}>전체 수업 목록</Title>
-                                <Flex align="center" gap={8}>
-                                    <Text type="secondary" style={{ fontSize: '14px' }}>폐강 & 지난 수업 숨기기</Text>
-                                    <Switch
+                                <Space>
+                                    <Button
                                         size="small"
-                                        checked={hideDeleted}
-                                        onChange={setHideDeleted}
-                                        style={{ backgroundColor: hideDeleted ? '#879B7E' : undefined }}
-                                    />
-                                </Flex>
+                                        onClick={handleEditSelected}
+                                        style={{ fontSize: '12px' }}
+                                        disabled={selectedRowKeys.length === 0}
+                                    >
+                                        수정
+                                    </Button>
+                                    <Tooltip title="이미 지난 수업 혹은 예약자가 존재하는 수업은 폐강할 수 없습니다">
+                                        <Button
+                                            size="small"
+                                            danger
+                                            onClick={handleBulkCancel}
+                                            style={{ fontSize: '12px' }}
+                                            disabled={
+                                                selectedRowKeys.length === 0 ||
+                                                data.lectureList.filter(l => selectedRowKeys.includes(l.id)).some(l => (activeCounts[l.id] ?? l.currentReservationCnt) > 0)
+                                            }
+                                        >
+                                            폐강
+                                        </Button>
+                                    </Tooltip>
+                                </Space>
                             </Flex>
                         }
                         bordered={false}
                         style={{ borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', minHeight: '500px' }}
                     >
+                        <Flex justify="flex-end" align="center" gap={8} style={{ marginBottom: 16 }}>
+                            <Text type="secondary" style={{ fontSize: '14px' }}>폐강 & 지난 수업 숨기기</Text>
+                            <Switch
+                                size="small"
+                                checked={hideDeleted}
+                                onChange={setHideDeleted}
+                                style={{ backgroundColor: hideDeleted ? '#879B7E' : undefined }}
+                            />
+                        </Flex>
                         <Table
                             dataSource={filteredLectures}
                             columns={lectureColumns}
                             rowKey="id"
                             pagination={{ pageSize: 10 }}
+                            rowSelection={{
+                                selectedRowKeys,
+                                onChange: (keys: React.Key[]) => setSelectedRowKeys(keys),
+                                getCheckboxProps: (record: IWellnessLectureInClass) => ({
+                                    disabled: record.isDelete || record.isPast,
+                                }),
+                                columnTitle: (
+                                    <Checkbox
+                                        checked={(() => {
+                                            const selectableKeys = filteredLectures
+                                                .filter(record => !record.isDelete && !record.isPast)
+                                                .map(record => record.id);
+                                            return selectableKeys.length > 0 && selectableKeys.every(key => selectedRowKeys.includes(key));
+                                        })()}
+                                        indeterminate={(() => {
+                                            const selectableKeys = filteredLectures
+                                                .filter(record => !record.isDelete && !record.isPast)
+                                                .map(record => record.id);
+                                            const selectedCount = selectableKeys.filter(key => selectedRowKeys.includes(key)).length;
+                                            return selectedCount > 0 && selectedCount < selectableKeys.length;
+                                        })()}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                const allSelectableKeys = filteredLectures
+                                                    .filter(record => !record.isDelete && !record.isPast)
+                                                    .map(record => record.id);
+                                                setSelectedRowKeys(allSelectableKeys);
+                                            } else {
+                                                setSelectedRowKeys([]);
+                                            }
+                                        }}
+                                    />
+                                ),
+                                preserveSelectedRowKeys: true,
+                            }}
                         />
                     </Card>
                 </Col>

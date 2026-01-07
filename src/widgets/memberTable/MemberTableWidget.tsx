@@ -98,7 +98,7 @@ export const MemberTableWidget = ({ data, loading }: { data: IGetAllMemberListBy
             dataSource={data}
             loading={loading}
             rowKey="id"
-            scroll={{ x: 1330 }}
+            scroll={{ x: 1000 }}
             pagination={{
                 pageSize: 10,
                 position: ['bottomCenter'],

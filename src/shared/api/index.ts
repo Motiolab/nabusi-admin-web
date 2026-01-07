@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getLocalAccessToken, setLocalAccessToken } from "@/shared/lib/token";
+import { getLocalAccessToken, setLocalAccessToken, getLocalRefreshToken, setLocalRefreshToken } from "@/shared/lib/token";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_APP_DOMAIN_URL,
@@ -15,6 +15,12 @@ api.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        const refreshToken = getLocalRefreshToken();
+        if (refreshToken) {
+            config.headers['Refresh-Token'] = refreshToken;
+        }
+
         return config;
     },
     error => Promise.reject(error)
@@ -22,10 +28,17 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (res) => {
-        const accessToken = res.headers.authorization;
-        if (accessToken) {
-            setLocalAccessToken(accessToken);
+        const authHeader = res.headers.authorization;
+        if (authHeader) {
+            const token = authHeader.replace(/^Bearer\s+/i, '');
+            setLocalAccessToken(token);
         }
+
+        const refreshHeader = res.headers['refresh-token'];
+        if (refreshHeader) {
+            setLocalRefreshToken(refreshHeader);
+        }
+
         return res;
     },
     (err) => {
@@ -34,10 +47,16 @@ api.interceptors.response.use(
             return Promise.reject(err);
         }
 
-        if (err.response?.status === 403) {
-            const accessToken = err.response.headers.authorization;
-            if (accessToken) {
-                setLocalAccessToken(accessToken);
+        if (err.response?.status === 403 || err.response?.status === 200) {
+            const authHeader = err.response.headers.authorization;
+            if (authHeader) {
+                const token = authHeader.replace(/^Bearer\s+/i, '');
+                setLocalAccessToken(token);
+            }
+
+            const refreshHeader = err.response.headers['refresh-token'];
+            if (refreshHeader) {
+                setLocalRefreshToken(refreshHeader);
             }
         } else if (err.response?.status === 401) {
             // Only redirect if not already on login page

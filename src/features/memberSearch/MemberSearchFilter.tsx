@@ -32,76 +32,76 @@ export const MemberSearchFilter = ({ filters, onFilterChange, onSearch, onReset 
             }}
             bodyStyle={{ padding: '24px' }}
         >
-            <Flex vertical gap={24}>
-                <Flex gap={48} wrap="wrap">
+            <Flex vertical gap={20}>
+                <Flex gap={24} wrap="wrap">
                     {/* Remaining Date & Count */}
-                    <Flex vertical gap={16} style={{ flex: 1, minWidth: '320px' }}>
-                        <Flex align="center" gap={12}>
-                            <Text strong style={{ width: 100 }}>잔여 기간</Text>
-                            <Space>
+                    <Flex vertical gap={12} style={{ flex: 1, minWidth: '280px' }}>
+                        <Flex align="center" gap={8}>
+                            <Text strong style={{ width: 80 }}>잔여 기간</Text>
+                            <Space size={4}>
                                 <InputNumber
                                     placeholder="최소"
                                     value={filters.remainingDateMin}
                                     onChange={(v) => onFilterChange({ ...filters, remainingDateMin: v ?? undefined })}
-                                    style={{ width: 80 }}
+                                    style={{ width: 70 }}
                                 />
                                 <Text type="secondary">~</Text>
                                 <InputNumber
                                     placeholder="최대"
                                     value={filters.remainingDateMax}
                                     onChange={(v) => onFilterChange({ ...filters, remainingDateMax: v ?? undefined })}
-                                    style={{ width: 80 }}
+                                    style={{ width: 70 }}
                                 />
-                                <Text>일</Text>
+                                <Text style={{ fontSize: '13px' }}>일</Text>
                             </Space>
                         </Flex>
 
-                        <Flex align="center" gap={12}>
-                            <Text strong style={{ width: 100 }}>잔여 횟수</Text>
-                            <Space>
+                        <Flex align="center" gap={8}>
+                            <Text strong style={{ width: 80 }}>잔여 횟수</Text>
+                            <Space size={4}>
                                 <InputNumber
                                     placeholder="최소"
                                     value={filters.remainingCntMin}
                                     onChange={(v) => onFilterChange({ ...filters, remainingCntMin: v ?? undefined })}
-                                    style={{ width: 80 }}
+                                    style={{ width: 70 }}
                                 />
                                 <Text type="secondary">~</Text>
                                 <InputNumber
                                     placeholder="최대"
                                     value={filters.remainingCntMax}
                                     onChange={(v) => onFilterChange({ ...filters, remainingCntMax: v ?? undefined })}
-                                    style={{ width: 80 }}
+                                    style={{ width: 70 }}
                                 />
-                                <Text>회</Text>
+                                <Text style={{ fontSize: '13px' }}>회</Text>
                             </Space>
                         </Flex>
                     </Flex>
 
                     {/* Search Text & Period */}
-                    <Flex vertical gap={16} style={{ flex: 1, minWidth: '320px' }}>
-                        <Flex align="center" gap={12}>
-                            <Text strong style={{ width: 100 }}>검색어</Text>
+                    <Flex vertical gap={12} style={{ flex: 1, minWidth: '280px' }}>
+                        <Flex align="center" gap={8}>
+                            <Text strong style={{ width: 80 }}>검색어</Text>
                             <Input
                                 placeholder="이름 또는 휴대폰 번호"
                                 prefix={<SearchOutlined style={{ color: '#94A3B8' }} />}
                                 value={filters.searchText}
                                 onChange={(e) => onFilterChange({ ...filters, searchText: e.target.value })}
-                                style={{ width: '100%', maxWidth: 300 }}
+                                style={{ width: '100%', maxWidth: 260 }}
                             />
                         </Flex>
 
-                        <Flex align="center" gap={12}>
-                            <Text strong style={{ width: 100 }}>등록일</Text>
+                        <Flex align="center" gap={8}>
+                            <Text strong style={{ width: 80 }}>등록일</Text>
                             <RangePicker
                                 value={filters.period}
                                 onChange={(dates) => onFilterChange({ ...filters, period: dates ? [dates[0], dates[1]] : [null, null] })}
-                                style={{ width: '100%', maxWidth: 300 }}
+                                style={{ width: '100%', maxWidth: 260 }}
                             />
                         </Flex>
                     </Flex>
                 </Flex>
 
-                <Flex justify="flex-end" gap={12}>
+                <Flex justify="flex-end" gap={8}>
                     <Button
                         icon={<ReloadOutlined />}
                         onClick={onReset}
@@ -117,7 +117,8 @@ export const MemberSearchFilter = ({ filters, onFilterChange, onSearch, onReset 
                             borderRadius: '8px',
                             backgroundColor: '#879B7E',
                             borderColor: '#879B7E',
-                            padding: '0 24px'
+                            padding: '0 20px',
+                            fontWeight: 600
                         }}
                     >
                         검색하기

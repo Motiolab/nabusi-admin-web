@@ -16,7 +16,9 @@ import {
     message,
     Table,
     Select,
-    Tabs
+    Tabs,
+    Tooltip,
+    Popconfirm
 } from 'antd';
 import {
     ArrowLeftOutlined,
@@ -25,7 +27,7 @@ import {
 import dayjs from 'dayjs';
 import { getWellnessLectureDetailById, deleteWellnessLecture } from '@/entities/wellnessLecture/api';
 import type { IGetWellnessLectureDetailAdminResponseV1 } from '@/entities/wellnessLecture/api';
-import { getReservationListByWellnessLectureId, createReservation } from '@/entities/reservation/api';
+import { getReservationListByWellnessLectureId, createReservation, cancelReservation } from '@/entities/reservation/api';
 import type { IGetReservationListByWellnessLectureIdAdminResponseV1 } from '@/entities/reservation/api';
 import { getAllMemberListByCenterId } from '@/entities/member/api';
 import type { IGetAllMemberListByCenterIdAdminResponseV1 } from '@/entities/member/api';
@@ -183,6 +185,20 @@ export default function WellnessLectureDetailView() {
         }
     };
 
+    const handleCancelReservation = async (reservationId: number) => {
+        try {
+            await cancelReservation(centerId!, reservationId);
+            message.success('예약이 취소되었습니다.');
+            fetchReservations();
+            // Refresh lecture detail to update counts
+            const res = await getWellnessLectureDetailById(centerId!, Number(id));
+            setLecture(res.data);
+        } catch (error) {
+            console.error('Failed to cancel reservation:', error);
+            message.error('예약 취소에 실패했습니다.');
+        }
+    };
+
     // Helpers for Reservation Table
     const getReservationStatusStyle = (status: string) => {
         const primaryColor = '#879B7E';
@@ -265,6 +281,27 @@ export default function WellnessLectureDetailView() {
                 );
             },
         },
+        {
+            title: '관리',
+            key: 'action',
+            width: 80,
+            render: (_: any, record: IGetReservationListByWellnessLectureIdAdminResponseV1) => {
+                const isCancelled = cancelStatuses.includes(record.reservationStatus);
+                if (isCancelled) return null;
+
+                return (
+                    <Popconfirm
+                        title="예약을 취소하시겠습니까?"
+                        onConfirm={() => handleCancelReservation(record.reservationId)}
+                        okText="네"
+                        cancelText="아니오"
+                        okButtonProps={{ danger: true }}
+                    >
+                        <Button type="link" danger size="small" style={{ padding: 0 }}>취소</Button>
+                    </Popconfirm>
+                );
+            }
+        },
     ];
 
     const cancelStatuses = ['ADMIN_CANCELED_RESERVATION', 'MEMBER_CANCELED_RESERVATION', 'MEMBER_CANCELED_RESERVATION_REFUND'];
@@ -307,10 +344,20 @@ export default function WellnessLectureDetailView() {
                         <Text type="secondary" style={{ fontSize: '14px', color: '#64748B' }}>{dayjs(lecture.startDateTime).format('YYYY년 MM월 DD일 (ddd)')}</Text>
                     </Flex>
                 </Flex>
-                <Space>
-                    <Button onClick={() => navigate(`/wellness-lecture/update/${lecture.id}`)}>수정</Button>
-                    <Button danger onClick={handleCancelLecture}>폐강</Button>
-                </Space>
+                {!lecture.isDelete && !dayjs(lecture.startDateTime).isBefore(dayjs()) && (
+                    <Space>
+                        <Button onClick={() => navigate(`/wellness-lecture/update/${lecture.id}`)}>수정</Button>
+                        <Tooltip title="이미 지난 수업 혹은 예약자가 존재하는 수업은 폐강할 수 없습니다">
+                            <Button
+                                danger
+                                onClick={handleCancelLecture}
+                                disabled={activeReservations.length > 0}
+                            >
+                                폐강
+                            </Button>
+                        </Tooltip>
+                    </Space>
+                )}
             </Flex>
 
             {/* Quick Metrics Cards */}
